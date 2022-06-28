@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "gpb/guest-posts-block",
+  "version": "1.0.0",
+  "title": "Guest Posts Block",
+  "category": "text",
+  "icon": "welcome-write-blog",
+  "description": "This plugin will allow authors to submit post on frontend.",
+  "supports": {
+    "html": true
+  },
+  "textdomain": "guest-posts-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
