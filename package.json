@@ -16,8 +16,11 @@
 		"prepare": "husky install"
 	},
 	"prettier": "@wordpress/prettier-config",
-	"lint-staged":{
-		".js": ["wp-scripts lint-js", "wp-scripts format"],
+	"lint-staged": {
+		".js": [
+			"wp-scripts lint-js",
+			"wp-scripts format"
+		],
 		".scss": "npx stylelint --fix"
 	},
 	"devDependencies": {
@@ -26,5 +29,9 @@
 		"@wordpress/stylelint-config": "^20.0.2",
 		"husky": "^8.0.1",
 		"lint-staged": "^13.0.3"
+	},
+	"dependencies": {
+		"@wordpress/components": "^19.13.0",
+		"classnames": "^2.3.1"
 	}
 }

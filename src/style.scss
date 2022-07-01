@@ -1,5 +1,12 @@
 .wp-block-gpb-guest-posts-block {
-	background-color: #7a1433;
-	color: #fff;
-	padding: 2px;
+	
+	&.text-block-align-left{
+		text-align:left;
+	}
+	&.text-block-align-center{
+		text-align:center;
+	}
+	&.text-block-align-right{
+		text-align:right;
+	}
 }
