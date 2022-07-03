@@ -17,10 +17,14 @@ import {
 	BlockControls,
 	AlignmentToolbar,
 	InspectorControls,
-	PanelColorSettings,
-	ContrastChecker,
-	withColors,
 } from '@wordpress/block-editor';
+
+import {
+	//eslint-disable-next-line
+	__experimentalBoxControl as BoxControl,
+	PanelBody,
+	RangeControl,
+} from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,87 +33,94 @@ import {
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-
+import classname from 'classnames';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
- * @param {any} [attributes] Edit Attributes
+ * @param {any} props prop attributes
  *
  * @return {WPElement} Element to render.
  */
 const Edit = ( props ) => {
-	const {
-		attributes,
-		setAttributes,
-		backgroundColor,
-		textColor,
-		setBackgroundColor,
-		setTextColor,
-	} = props;
-	const { title, alignment } = attributes;
+	const { attributes, setAttributes } = props;
+	const { title, textAlignment, style, shadow, shadowOpacity } = attributes;
+	const { __Visualizer: BoxControlVisualizer } = BoxControl;
+	const classes = classname( `text-block-align-${ textAlignment }`, {
+		'has-shadow': shadow,
+		[ `shadow-opacity-${ shadowOpacity }` ]: shadow && shadowOpacity,
+	} );
 	const alignmentHandler = ( newAlignment ) => {
-		setAttributes( { alignment: newAlignment } );
+		setAttributes( { textAlignment: newAlignment } );
 	};
 	const onAlignmentChangeTitle = ( newTitle ) => {
 		setAttributes( { title: newTitle } );
 	};
-
+	const onChangeShadowOpacity = ( newShadowOpacity ) => {
+		setAttributes( { shadowOpacity: newShadowOpacity } );
+	};
+	const toggleShadow = () => {
+		setAttributes( { shadow: ! shadow } );
+	};
 	return (
 		<div>
 			<InspectorControls>
-				<PanelColorSettings
-					title={ __( 'Color Settings', 'guest-posts-block' ) }
-					icon="admin-appearance"
-					initialOpen
-					colorSettings={ [
-						{
-							label: __(
-								'Background Color',
+				{ shadow && (
+					<PanelBody
+						title={ __( 'Shadow Setting', 'guest-posts-block' ) }
+					>
+						<RangeControl
+							label={ __(
+								'Shadow Opacity',
 								'guest-posts-block'
-							),
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-						},
-						{
-							label: __( 'Text Color', 'guest-posts-block' ),
-							value: textColor.color,
-							onChange: setTextColor,
-						},
-					] }
-				>
-					<ContrastChecker
-						textColor={ textColor.color }
-						backgroundColor={ backgroundColor.color }
-					/>
-				</PanelColorSettings>
+							) }
+							value={ shadowOpacity }
+							min={ 10 }
+							max={ 100 }
+							step={ 10 }
+							onChange={ onChangeShadowOpacity }
+						/>
+					</PanelBody>
+				) }
 			</InspectorControls>
-			<BlockControls>
+			<BlockControls
+				controls={ [
+					{
+						icon: 'admin-page',
+						title: __( 'Shadow', 'guest-posts-block' ),
+						onClick: toggleShadow,
+						isActive: shadow,
+					},
+				] }
+			>
 				<AlignmentToolbar
-					value={ alignment }
+					value={ textAlignment }
 					onChange={ alignmentHandler }
 				/>
 			</BlockControls>
-			<RichText
+			<div
 				{ ...useBlockProps( {
-					className: `text-block-align-${ alignment }`,
-					style: {
-						backgroundColor: backgroundColor.color,
-						color: textColor.color,
-					},
+					className: classes,
 				} ) }
-				placeholder={ __( 'Post Title', 'guest-posts-block' ) }
-				onChange={ onAlignmentChangeTitle }
-				tagName="h4"
-				value={ title }
-				allowedFormats={ [] }
-			/>
+			>
+				<RichText
+					className="title-box"
+					placeholder={ __( 'Post Title', 'guest-posts-block' ) }
+					onChange={ onAlignmentChangeTitle }
+					tagName="p"
+					value={ title }
+					allowedFormats={ [] }
+				/>
+				<BoxControlVisualizer
+					values={ style && style.spacing && style.spacing.padding }
+					showValues={
+						style && style.visualizers && style.visualizers.padding
+					}
+				/>
+			</div>
 		</div>
 	);
 };
-export default withColors( {
-	backgroundColor: 'backgroundColor',
-	textColor: 'color',
-} )( Edit );
+export default Edit;

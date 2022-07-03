@@ -8,17 +8,45 @@
   "icon": "welcome-write-blog",
   "description": "This plugin will allow authors to submit post on frontend.",
   "supports": {
-    "html": false
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradient": true
+    },
+    "spacing": {
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "title": "This is some text",
+      "gradient": "red-to-blue",
+      "shadow": true
+    }
   },
   "textdomain": "guest-posts-block",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
+  "styles": [
+    {
+      "name": "squared",
+      "label": "Squared",
+      "isDefault": true
+    },
+    {
+      "name": "rounded",
+      "label": "Rounded"
+    }
+  ],
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "source": "html",
+      "selector": "p"
     },
-    "alignment": {
+    "textAlignment": {
       "type": "string",
       "default": "left"
     },
@@ -28,11 +56,27 @@
     "textColor": {
       "type": "string"
     },
-    "customBackgroundColor": {
-      "type": "string"
+    "gradient": {
+      "type": "string",
+      "default": true,
+      "gradient": "red-to-blue"
     },
-    "customTextColor": {
-      "type": "string"
+    "style": {
+      "type": "object",
+      "default": {
+        "color": {
+          "background": "#000",
+          "text": "#fff"
+        }
+      }
+    },
+    "shadow": {
+      "type": "boolean",
+      "default": false
+    },
+    "shadowOpacity": {
+      "type": "number",
+      "default": 30
     }
   }
 }

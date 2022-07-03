@@ -28,7 +28,8 @@
 		"@wordpress/scripts": "^23.3.0",
 		"@wordpress/stylelint-config": "^20.0.2",
 		"husky": "^8.0.1",
-		"lint-staged": "^13.0.3"
+		"lint-staged": "^13.0.3",
+		"lodash": "^4.17.21"
 	},
 	"dependencies": {
 		"@wordpress/components": "^19.13.0",

@@ -1,1 +1,0 @@
-{"version":3,"file":"index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://guest-posts-block/./src/editor.scss"],"sourcesContent":[".wp-block-gpb-guest-posts-block {\n\tborder: 1px dotted #d6d6d6;\n}\n"],"names":[],"sourceRoot":""}
